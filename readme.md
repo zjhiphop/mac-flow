@@ -12,3 +12,6 @@ Useful and qucik Mac Apple Scripts
 * Integrate IFTTT 
 * Impleate JS version
 
+
+### Refs
+[macosxautomation][https://www.macosxautomation.com/]
