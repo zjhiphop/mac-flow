@@ -1,0 +1,29 @@
+#!/usr/bin/env bash                                                                                                               
+# Make a new notes via terminal script                                                                                         
+# args: addNote <title> <body>        
+
+osascript - "$1" "$2" <<END
+on getNameOfTargetAccount(thisPrompt)
+    tell application "Notes"
+        if the (count of accounts) is greater than 1 then
+            set theseAccountNames to the name of every account
+            set thisAccountName to ¬
+                (choose from list theseAccountNames with prompt thisPrompt)
+            if thisAccountName is false then error number -128
+            set thisAccountName to thisAccountName as string
+        else
+            set thisAccountName to the name of account 1
+        end if
+        return thisAccountName
+    end tell
+end getNameOfTargetAccount
+
+on run argv  
+    tell application "Notes"
+        set thisAccountName to my getNameOfTargetAccount("Choose an account:")
+        tell account thisAccountName
+            make new note at folder "tmp" with properties {name:item 1 of argv, body:item 2 of argv}
+        end tell
+    end tell
+end run                                                                                                                           
+END
